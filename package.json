@@ -1,0 +1,63 @@
+{
+  "version": "0.1.0",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "engines": {
+    "node": ">=10"
+  },
+  "scripts": {
+    "start": "tsdx watch",
+    "build": "tsdx build",
+    "test": "tsdx test --passWithNoTests",
+    "lint": "tsdx lint",
+    "prepare": "tsdx build",
+    "size": "size-limit",
+    "analyze": "size-limit --why"
+  },
+  "peerDependencies": {
+    "react": ">=16.8"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "tsdx lint"
+    }
+  },
+  "prettier": {
+    "printWidth": 80,
+    "semi": true,
+    "singleQuote": true,
+    "trailingComma": "es5"
+  },
+  "name": "use-load-more-list",
+  "author": "fulldo",
+  "module": "dist/use-load-more-list.esm.js",
+  "size-limit": [
+    {
+      "path": "dist/use-load-more-list.cjs.production.min.js",
+      "limit": "10 KB"
+    },
+    {
+      "path": "dist/use-load-more-list.esm.js",
+      "limit": "10 KB"
+    }
+  ],
+  "devDependencies": {
+    "@size-limit/preset-small-lib": "^7.0.8",
+    "@types/react": "16.8.6",
+    "antd-mobile": "^5.9.5",
+    "husky": "^7.0.4",
+    "react": "16.8.6",
+    "react-dom": "16.8.6",
+    "react-hooks-testing-library": "0.5.0",
+    "react-test-renderer": "16.8.6",
+    "size-limit": "^7.0.8",
+    "tsdx": "^0.14.1",
+    "tslib": "^2.3.1",
+    "typescript": "^4.6.3"
+  }
+}
