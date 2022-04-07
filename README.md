@@ -11,7 +11,9 @@ import { useLoadMoreList } from 'use-load-more-list'
 
 ## 基础用法
 
-demo 示例
+在线demo：[https://fulldo.github.io/pages/use-load-more-list/](https://fulldo.github.io/pages/use-load-more-list/)
+
+代码示例：
 
 ```typescript
 import * as React from 'react'
