@@ -33,9 +33,6 @@ function reducer(state = getInitState<any, any>(), action: Action) {
         loading: true
       }
     }
-    case actionType.RESET: {
-      return { ...getInitState() }
-    }
     case actionType.REQUEST_FAIL: {
       const { error } = payload
 
@@ -47,18 +44,19 @@ function reducer(state = getInitState<any, any>(), action: Action) {
     }
     case actionType.REQUEST_SUCCESS: {
       const { data, idKey, pageNumber, total, extra } = payload
+      // 如果不是第一页就追加数据，否则直接用传入的
       let newData =
         state.data && pageNumber !== DEFAULT_PAGE_NUMBER ? state.data.concat(data) : data
       if (idKey) {
-        // 数据去重
+        // 数据去重，主要是应用于删除场景的唯一标识
         newData = deDuplication(newData, idKey)
       }
       return {
         ...state,
         total,
-        extra,
+        extra, // 除基础数据外的额外数据，又逻辑层传入
         pageNumber,
-        error: null,
+        error: null, // 需要对 error 置空，避免受上一次请求失败的影响
         loading: false,
         data: newData
       }
@@ -81,16 +79,16 @@ function reducer(state = getInitState<any, any>(), action: Action) {
         data: newData
       }
     }
+    case actionType.RESET: {
+      return { ...getInitState() }
+    }
     default: {
       throw new Error('type 错误')
     }
   }
 }
 
-function unique<T>(arr: T[]) {
-  return Array.from(new Set(arr))
-}
-
+// 数据项去重
 function deDuplication<T>(data: T[], idKey: string | number): T[] {
   // id -> 数组index 的映射，方便查找
   const idToIndex = {} as { [id: string]: number }
@@ -106,6 +104,10 @@ function deDuplication<T>(data: T[], idKey: string | number): T[] {
 
   const uniqueIds = unique(ids)
   return uniqueIds.map(id => data[idToIndex[id]])
+}
+// 基础数据去重
+function unique<T>(arr: T[]) {
+  return Array.from(new Set(arr))
 }
 
 export default reducer

@@ -32,7 +32,7 @@ export interface ReturnObject<Data, Extra> extends State<Data, Extra> {
   deleteDataById(id: number | string, deleteCountOfAutoUpdate?: number): void
 }
 
-export interface UsePaginationConfig<Result, Params> {
+export interface UseLoadMoreListConfig<Result, Params> {
   // 后端列表数组对应的key值，比如后端返回的是 { result: [], total: 0 } ，那么可以就是'result'，默认是"data"
   dataKey?: string
   // total 字段后端给的 key（防止后端搞特殊乱起名字），默认"total"

@@ -48,13 +48,10 @@ export default function Demo() {
 
     const renderRecord = (record: any) => {
         return (
-            <div style={{ display: 'flex', color: '#333' }}>
-                <div style={{ marginRight: 8 }}>
-                    <div style={{ width: 64, height: 64 }} />
-                </div>
+            <div style={{ display: 'flex', color: '#333', fontSize: 14 }}>
                 <div>
                     <div style={{ display: 'flex', alignItems: 'center' }}>
-                        {`id是 ${record.id} 的数据 - name ${extra && extra.name}`}
+                        {`id是 ${record.id} 的数据 - extra: ${extra && extra.extraName}`}
                         <Button color='danger' style={{ marginLeft: 10 }} size="small" onClick={() => deleteData(record.id)}>
                             删除
                         </Button>
@@ -85,58 +82,68 @@ export default function Demo() {
     }, [value])
 
     return (
-        <div style={{ margin: 'auto', width: 400, height: 500, overflowY: 'scroll', border: '1px solid #000', overflowX: "hidden" }}>
-            <div style={{ padding: 10 }}>
-                <Button color='primary' size="small" onClick={() => run()}>
-                    点击手动触发请求 / 重置
-                </Button>
-            </div>
-            <Input
-                style={{ padding: 10 }}
-                title="query id"
-                placeholder="输入 id 参数筛选查询"
-                value={value}
-                onChange={value => {
-                    setValue(value)
-                }}
-            />
-            {!data && loading && (
-                <div style={{ textAlign: 'center', marginTop: 100 }}>
-                    <SpinLoading style={{ '--size': '48px' }} />
+        <div style={{
+            display: 'flex',
+            flexDirection: 'column',
+            margin: 'auto',
+            maxWidth: 400,
+            width: '100%',
+            height: 'calc(100vh - 40px)',
+            maxHeight: 800,
+            overflowY: 'scroll',
+            border: '1px solid #000',
+            overflowX: "hidden"
+        }}>
+            <div>
+                <div style={{ padding: 10 }}>
+                    <Button color='primary' size="small" onClick={() => run()}>
+                        点击手动触发请求 / 重置
+                    </Button>
                 </div>
-            )}
-            {!data && !loading && (
-                <div style={{ padding: 10, textAlign: 'center', color: 'gray' }}>当前列表数据为空，请点击上方按钮加载</div>
-            )}
-            {!!data && (
-                <>
-                    <div
-                        style={{ padding: 10 }}
-                    >
-                        共有{total}条，当前是第{pageNumber}页
+                <Input
+                    style={{ padding: 10 }}
+                    title="query id"
+                    placeholder="输入 id 测试业务参数筛选查询"
+                    value={value}
+                    onChange={value => {
+                        setValue(value)
+                    }}
+                />
+            </div>
+            <div style={{
+                flex: 1,
+                margin: 5,
+                overflowY: 'scroll',
+                border: '1px solid #000',
+                overflowX: "hidden"
+            }}>
+                {!data && loading && (
+                    <div style={{ textAlign: 'center', marginTop: 100 }}>
+                        <SpinLoading style={{ '--size': '48px' }} />
                     </div>
-                    {/* <ListView
-                        // refreshing 为 true 才能显示 loadingInfo
-                        refreshing={loading || !hasMore}
-                        loadingInfo={hasMore ? '正在加载中...' : '没有更多数据了'}
-                        useBodyScroll={false}
-                        style={{ height: 400 }}
-                        pullToRefresh
-                        onLoad={handleLoad}
-                        data={data}
-                        render={renderRecord}
-                    /> */}
-                    <List
-                        style={{ padding: 10 }}
-                    >
-                        {data.map((item) => (
-                            <List.Item key={item.id}>{renderRecord(item)}</List.Item>
-                        ))}
-                    </List>
-                    <InfiniteScroll loadMore={handleLoad} hasMore={hasMore} />
-                </>
-            )}
-        </div>
+                )}
+                {!data && !loading && (
+                    <div style={{ padding: 10, textAlign: 'center', color: 'gray' }}>当前列表数据为空，请点击上方按钮加载</div>
+                )}
+                {!!data && (
+                    <>
+                        <div
+                            style={{ padding: 10 }}
+                        >
+                            共有{total}条，当前是第{pageNumber}页
+                        </div>
+                        <List
+                            style={{ padding: 10 }}
+                        >
+                            {data.map((item) => (
+                                <List.Item key={item.id}>{renderRecord(item)}</List.Item>
+                            ))}
+                        </List>
+                        <InfiniteScroll loadMore={handleLoad} hasMore={hasMore} />
+                    </>
+                )}
+            </div>
+        </div >
     )
 }
 
@@ -156,7 +163,7 @@ const database = (function () {
         }) {
             const filteredData = queryId ? data.filter(({ id }) => id.indexOf(queryId) >= 0) : data
             return {
-                name: 'xxx',
+                extraName: 'xxx',
                 data: filteredData.slice((pageNumber - 1) * pageSize, pageNumber * pageSize),
                 dataTotal: filteredData.length
             }
