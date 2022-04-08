@@ -3,6 +3,13 @@
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
+  "description": "useLoadMoreList is a data management React hook for scenarios such as infinite scrolling and loading more lists.",
+  "keywords": [
+    "React",
+    "React Hook",
+    "infinite scrolling",
+    "load more list"
+  ],
   "files": [
     "dist",
     "src"
