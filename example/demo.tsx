@@ -1,5 +1,5 @@
 import * as React from 'react'
-import usePagination from '../src'
+import useLoadMoreList from '../src'
 import { InfiniteScroll, Button, Toast, Input, SpinLoading, List } from 'antd-mobile'
 
 export default function Demo() {
@@ -16,7 +16,7 @@ export default function Demo() {
         reset,
         deleteDataById,
         getNextPage
-    } = usePagination<{
+    } = useLoadMoreList<{
         id: number
     }>(fetchDemoData, {
         dataKey: 'data', // 后端返回数据的key
